@@ -1,4 +1,4 @@
-import Facility from "../Facility/Facility";
+import Facility from "./Facility/Facility";
 import css from './home.module.css';
 
 const facility=[
