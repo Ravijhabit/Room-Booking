@@ -1,0 +1,40 @@
+.container{
+    display: flex;
+    height: 90vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.inputContainer{
+    box-sizing: border-box;
+    width:300px;
+    height:90px;
+    padding:10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.inputContainer:last-child{
+    height: auto;
+}
+.inputContainer>input, .inputContainer>button{
+    box-sizing: border-box;
+    height:50px;
+    padding:3px 16px;
+    border-radius: 10px;
+    border:1px solid blueviolet;
+    outline:none;
+}
+.inputContainer>input:focus{
+    border:2px solid rgb(59, 14, 102);
+}
+
+.inputContainer>button{
+    height: 40px;
+    background-color: blueviolet;
+    color:#f2f2f2;
+    cursor: pointer;
+}
+p{
+    text-align: center;
+}

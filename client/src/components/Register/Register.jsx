@@ -1,26 +1,27 @@
 import { useState } from "react";
 import {useNavigate,Link} from 'react-router-dom';
 import axios from 'axios';
-import css from './login.module.css';
+import css from './register.module.css';
 
-const Login = ()=>{
+const Register = ()=>{
     const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const handleSubmit = (event)=>{
         event.preventDefault();
-        axios.post('http://localhost:3000/login',{username,password});
-        alert('You can surf now')
-        navigate('/');
+        axios.post('http://localhost:3000/register',{username,email,password});
+        alert('Registration Complete You can login')
+        navigate('/user/login');
     }
     return(
         <div className={css.container}>
-            <h1>Login</h1>
+            <h1>Register</h1>
             <div>
-                <form onSubmit={handleSubmit}>
+                <form className={css.fill} onSubmit={handleSubmit}>
                     <div className={css.inputContainer}>
                         <label htmlFor="username">Username:</label>
-                        <input 
+                        <input
                             type="text" 
                             id="username" 
                             placeholder="John Doe"  
@@ -29,8 +30,18 @@ const Login = ()=>{
                         />
                     </div>
                     <div className={css.inputContainer}>
+                        <label htmlFor="email">Email:</label>
+                        <input
+                            type="email" 
+                            id="email" 
+                            placeholder="test@email.com" 
+                            value={email}
+                            onChange={(event)=>setEmail(event.target.value)}
+                        />
+                    </div>
+                    <div className={css.inputContainer}>
                         <label htmlFor="password">Password:</label>
-                        <input 
+                        <input
                             type="password" 
                             id="password" 
                             placeholder="********" 
@@ -39,13 +50,15 @@ const Login = ()=>{
                         />  
                     </div>
                     <div className={css.inputContainer}>
-                        <button type="submit"> Submit</button>           
+                        <button type="submit"> Submit</button>
                     </div>
                 </form>
-                <p>Don't have an account? <Link to='/user/register'>Sign Up</Link></p>
+                <p>Already have an account? 
+                    <Link to='/user/login'>Login</Link>
+                </p>
             </div>
         </div>
     )
 }
 
-export default Login
+export default Register

@@ -2,11 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+// const session = require('express-session');
+//remove session from memory
 require('dotenv').config();
 const app = express();
 
 const UserModel = require('./models/User');
-
 app.use(express.json());
 app.use(cors());
 
@@ -31,7 +32,7 @@ app.use('/register',async (req, res)=>{
     const hashedPassword = await bcrypt.hash(password,12);
     const User = new UserModel({username,email:modifiedEmail,password:hashedPassword});
     await User.save();
-    res.json('Ok Registered');
+    res.json('Ok registered');
 });
 
 app.use('/login',async (req,res)=>{
