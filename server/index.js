@@ -2,53 +2,61 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-// const session = require('express-session');
-//remove session from memory
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 const app = express();
 
-const UserModel = require('./models/User');
+const userRoutes = require('./routes/user');
+const bookingRoutes = require('./routes/booking')
+
+
+const User = require('./models/User.js');
+const Booking = require('./models/Booking.js');
+
+const bcryptSalt = bcrypt.genSaltSync(12);
+const jwtSecret = 'sdaflhsdalkjghwoifkasndc';
+
 app.use(express.json());
-app.use(cors());
+app.use(express.urlencoded({extended:true}));
+app.use(cookieParser());
+app.use(cors({
+    credentials:true,
+    origin:'http://127.0.0.1:5173'
+}));
+app.use('/user', userRoutes);
+app.use('/booking',bookingRoutes);
 
-mongoose.connect(process.env.MONGO_URL);
-const db=mongoose.connection;
-db.on('error',console.error.bind(console,'Mongoose Connection Error'));
-db.once('open', ()=>{
-    console.log('Connection established with Mongoose');
+mongoose.connect(process.env.MONGO_URL)
+    .then(()=>{
+        console.log('Mongoose Connected');
+    }).catch(err=>{
+        console.log(`error is ${err}`);
+    });
+
+// function getUserDataFromReq(req){
+//     return new Promise((resolve, reject)=>{
+//         jwt.verify(req.cookies.token, jwtSecret, {},async(err, userData)=>{
+//             if(err)
+//                 throw err;
+//             resolve(userData);
+//         });
+//     });
+// }
+
+app.get('/profile', async (req,res)=>{
+    const {token} = await req.cookies;
+    if(token){
+        jwt.verify(token, jwtSecret, {}, async(err, userData)=>{
+            if(err) throw err;
+            const {username, email, _id} = await User.findById(userData.id);
+            res.json({username, email,_id});
+        })
+    }else{
+        res.json(null);
+    }
 });
 
-app.use('/register',async (req, res)=>{
-    const {username, email, password} = req.body;
-    const modifiedEmail=email.toLowerCase();
-    const userEmail = await UserModel.findOne({email:modifiedEmail});
-    if(userEmail){
-        return res.json('User already exists');
-    }
-    const userName = await UserModel.findOne({username});
-    if(userName){
-        return res.json('UserName already exists. Please choose another');
-    }
-    const hashedPassword = await bcrypt.hash(password,12);
-    const User = new UserModel({username,email:modifiedEmail,password:hashedPassword});
-    await User.save();
-    res.json('Ok registered');
-});
-
-app.use('/login',async (req,res)=>{
-    const {username, password} = req.body;
-    const user =  await UserModel.findOne({username});
-    if(!user){
-        return res.json({message:"User doesn't exists"});
-    }
-    const isValidPassword = await bcrypt.compare(password,user.password);
-    
-    if(!isValidPassword){
-        return res.json({message:'Username or Password Incorrect'});
-    }
-    return res.json('ok logined')
-})
-
-app.listen(3000, ()=>{
-    console.log('Server started at 3000');
+app.listen(3000, function(){
+    console.log('Server listening on 3000');
 });

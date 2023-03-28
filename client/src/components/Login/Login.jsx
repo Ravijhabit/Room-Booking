@@ -1,17 +1,26 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {useNavigate,Link} from 'react-router-dom';
 import axios from 'axios';
 import css from './login.module.css';
+import { UserContext } from "../hooks/UserContext";
 
 const Login = ()=>{
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const {setUser} = useContext(UserContext);
     const navigate = useNavigate();
-    const handleSubmit = (event)=>{
+    const handleSubmit = async (event)=>{
         event.preventDefault();
-        axios.post('http://localhost:3000/login',{username,password});
-        alert('You can surf now')
-        navigate('/');
+        try{
+            const response = await axios.post('/user/login',{username,password});
+            alert('You can surf now');
+            setUser(response.data);
+            navigate('/');
+        }catch(err){
+            alert('Login Failed')
+        }
+        setUsername('');
+        setPassword('');
     }
     return(
         <div className={css.container}>

@@ -1,0 +1,61 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background:rgb(36, 35, 35);
+    color:rgba(255, 255, 255, 0.897);
+}
+.profile{
+    box-sizing: border-box;
+    width:40%;
+    max-width: 500px;
+    padding:40px;
+}
+.card{
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.name{
+    display: flex;
+    gap:16px;
+}
+.name img{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+.intro{
+    background-color: rgb(56, 55, 55);
+    padding:30px;
+    border-radius:20px;
+}
+.intro h3{
+    color:rgb(124, 124, 124);
+    margin:0;
+}
+.intro>div{
+    display: flex;
+    flex-direction: column;
+}
+.cell{
+    display: flex;
+    justify-content: space-between;
+}
+.cell>button, .btn{
+    background:rgb(124, 124, 124);
+    cursor:pointer;
+    height:30px;
+    border-radius: 4px;
+    border:none;
+    color:rgba(255, 255, 255, 0.897);
+}
+.footer{
+    display: flex;
+    justify-content: space-evenly;
+}
+.btn{
+    background-color: red;
+}

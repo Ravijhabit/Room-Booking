@@ -8,9 +8,9 @@ const Register = ()=>{
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const handleSubmit = (event)=>{
+    const handleSubmit = async (event)=>{
         event.preventDefault();
-        axios.post('http://localhost:3000/register',{username,email,password});
+        await axios.post('/user/register',{username,email,password});
         alert('Registration Complete You can login')
         navigate('/user/login');
     }
@@ -18,7 +18,7 @@ const Register = ()=>{
         <div className={css.container}>
             <h1>Register</h1>
             <div>
-                <form className={css.fill} onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit}>
                     <div className={css.inputContainer}>
                         <label htmlFor="username">Username:</label>
                         <input

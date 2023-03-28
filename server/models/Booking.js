@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const BookingSchema = new Schema({
     user:{
         type:Schema.Types.ObjectId,
-        ref:'users'
+        ref:'User'
     },
     checkIn:{
         type:Date,
@@ -28,7 +28,7 @@ const BookingSchema = new Schema({
         required:true,
         min:[0,'Negative not possible']
     },
-    NumberOfRooms:{
+    numberOfRooms:{
         type:Number,
         required:true,
         min:[0,'Negative room not possible']
@@ -40,4 +40,4 @@ const BookingSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('bookings', BookingSchema);
+module.exports = mongoose.model('Booking', BookingSchema);
