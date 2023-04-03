@@ -5,31 +5,14 @@ import { useNavigate } from 'react-router-dom';
 
 import css from './dialogbox.module.css';
 
-const DialogBox = ({changeShow}) =>{
-    const {setUser} = useContext(UserContext);
-    const [password, setPassword] = useState('');
-    const navigate = useNavigate();
+const DialogBox = ({changeShow, submitHandler, password, setPassword}) =>{
     
-    const submitHandler = async (event)=>{
-        event.preventDefault();
-        await axios({
-            method:'delete',
-            url:'/user/delete',  
-            data:{
-              password
-            }
-          });
-          setUser('');
-          navigate('/');
-    }
     const cancelHandler = (event) =>{
         event.preventDefault();
         changeShow(false);
         setPassword('');
     }
     return(
-        // <div>Show Model</div>
-        // <div className={css.container}>
         <div className={css.holder}>
             <section className={css.header}>
                 <svg onClick={cancelHandler} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -50,7 +33,6 @@ const DialogBox = ({changeShow}) =>{
                 <button className={css.btn} type="submit">Submit</button>
             </form>
         </div>
-        // </div>
     );
 }
 

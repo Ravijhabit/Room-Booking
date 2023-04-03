@@ -1,15 +1,30 @@
 import { useState, useContext } from 'react';
 import { UserContext } from '../hooks/UserContext';
-
+import axios from 'axios';
 import css from './profile.module.css';
 import DialogBox from '../hoc/Dialogbox';
+import { useNavigate } from 'react-router-dom';
 
 const Profile = ()=>{
     const [show, setShow] = useState(false);
-    const {user} = useContext(UserContext);
+    const {user, setUser} = useContext(UserContext);
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
     const deleteHandler = async(event)=>{
         event.preventDefault();
         setShow(true);
+    }
+    const submitHandler = async (event)=>{
+        event.preventDefault();
+        await axios({
+            method:'delete',
+            url:'/user/delete',  
+            data:{
+              password
+            }
+          });
+        setUser('');
+        navigate('/');
     }
 
     return(
@@ -28,21 +43,21 @@ const Profile = ()=>{
                             <h3>Display Name</h3>
                             <div className={css.cell}>
                                 <h5>{user?.username}</h5>
-                                <button>Edit</button>
+                                {/* <button onClick={changeHandler}>Edit</button> */}
                             </div>
                         </div>
                         <div>
                             <h3>Email</h3>
                             <div className={css.cell}>
                                 <h5>{user?.email}</h5>
-                                <button>Edit</button>
+                                {/* <button onClick={changeHandler}>Edit</button> */}
                             </div>
                         </div>
                         <div>
-                            <h3>Password</h3>
+                            <h3>Password</h3> 
                             <div className={css.cell}>
                                 <h5>********</h5>
-                                <button>Change</button>
+                                {/* <button onClick={changeHandler}>Change</button> */}
                             </div>
                         </div>
                     </section>
@@ -51,9 +66,8 @@ const Profile = ()=>{
                     <button className={css.btn} onClick={deleteHandler}>Delete</button>
                 </section>
             </div>
-            { show ? 
-                <DialogBox changeShow={setShow}/>
-                : ''
+            { show &&
+                <DialogBox changeShow={setShow} submitHandler={submitHandler} password={password} setPassword={setPassword}/>
             }
         </div>
     );

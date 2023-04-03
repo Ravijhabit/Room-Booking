@@ -1,15 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { format, differenceInCalendarDays, parseISO } from 'date-fns';
 import axios from 'axios';
 import css from './singleBooking.module.css';
 import getBookingData from "../hoc/getBookingData";
+import DialogBox from "../hoc/Dialogbox";
+import { UserContext } from "../hooks/UserContext";
 
 const SingleBooking = () =>{
     const [bookingInfo, setBookingInfo] = useState(null);
+    const [password, setPassword] = useState('');
+    const [show, setShow] = useState(false);
+    const {user} = useContext(UserContext);
     const {id} = useParams();
     const navigate = useNavigate();
-    useEffect(()=>{
+    useEffect(()=>{ 
         const getData = async() => {
             try{
                 const response = await getBookingData(id);
@@ -19,6 +24,9 @@ const SingleBooking = () =>{
             }
         }
         getData();
+        if(!user){
+            navigate('/user/login');
+        }
     },[id]);
     const updateHandler = (event)=>{
         event.preventDefault();
@@ -32,15 +40,19 @@ const SingleBooking = () =>{
     const deleteHandler = async (event) =>{
         event.preventDefault();
         if(differenceInCalendarDays(new Date(format(parseISO(bookingInfo.checkIn),'yyyy-MM-dd')),new Date(format(Date.now(), 'yyyy-MM-dd')))>0){
-            try{
-                const response = await axios.delete(`/booking/${id}/delete`);
-            }catch(err){
-                console.log(err);
-            }
-            navigate('/');
+            setShow(true);
         }
         else{
             console.log('Not possible');
+        }
+    }
+    const submitHandler = async (event) =>{
+        event.preventDefault();
+        try{
+            await axios.delete(`booking/${id}/delete`,{password});
+            navigate('/');
+        }catch(err){
+            console.log(err);
         }
     }
     return(
@@ -82,8 +94,14 @@ const SingleBooking = () =>{
                         <button onClick={updateHandler}>Update</button>
                         <button onClick={deleteHandler}>Delete</button>
                     </div>
+                    {
+                        show?
+                        <DialogBox changeShow={setShow} submitHandler={submitHandler} password={password} setPassword={setPassword}/>
+                        :''
+                    }
                 </div>    
             }
+            
             {/* update */}
             {/* delete */}
             {/* read */}

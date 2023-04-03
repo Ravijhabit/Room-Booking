@@ -51,13 +51,27 @@ router.post('/login', async(req,res)=>{
 });
 
 //update
+//create a middleware which checks if password is correct or not
+// router.put('/:id/edit', async(req,res)=>{
+//     try{
+//         const {username, email, password} = req.body;
+//         const user = await User.create({
+//             username, 
+//             email,
+//             password: bcrypt.hashSync(password, bcryptSalt),
+//         });
+//         res.json(user);
+//     } catch(err){
+//         res.status(422).json(err);
+//     }
+// });
 
 //delete
 router.delete('/delete', async(req,res)=>{
     const {token} = req.cookies;
     const {password} =req.body;
     if(token){
-        let userData='noValue';
+        let userData='';
         jwt.verify(token, jwtSecret, {}, async(err, user)=>{
             if(err) throw err;
             userData = await User.findById(user.id);   

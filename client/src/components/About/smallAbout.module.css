@@ -1,0 +1,29 @@
+.aboutBlock{
+    display: flex;
+    flex-direction: row;
+    gap:20px;
+    height:700px;
+    align-items: center;
+    text-align: center;
+}
+.aboutBlock>img{
+    border-radius:200px 0 200px 0;
+}
+.aboutBlock h1{
+    font-size:40px;
+}
+.aboutBlock p{
+    font-size:24px;
+}
+/* .aboutBlock>section{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height:100%;
+} */
+.left{
+    flex-direction: row-reverse;
+}
+.left>img{
+    border-radius: 0 200px 0 200px;
+}

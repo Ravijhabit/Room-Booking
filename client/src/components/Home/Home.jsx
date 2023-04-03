@@ -1,7 +1,11 @@
-import Facility from "./Facility/Facility";
+import {useNavigate} from 'react-router-dom';
 import css from './home.module.css';
-
-const facility=[
+import Facility from './Facility/Facility';
+import Room from './Facility/Room';
+import Footer from '../Footer/Footer';
+import { useContext, useEffect } from 'react';
+import { UserContext } from '../hooks/UserContext';
+const facilities=[
     {
         name:'Swimming',
         value:  
@@ -29,52 +33,70 @@ const facility=[
 
     }
 ];
-const images =[
-    'https://ihplb.b-cdn.net/wp-content/uploads/2013/11/Taj-Palace-Hotel-in-new-delhi.jpg',
-    'https://www.hotelitist.com/wp-content/uploads/2019/01/Hotels-and-Resorts.jpg',
-    'https://www.fivestaralliance.com/files/fivestaralliance.com/home_page_hero_image/SIG%20Ciragan%20Palace%20Hotel%20Kempinski%20Istanbul%205.jpg',
-    'https://www.holidify.com/images/cmsuploads/compressed/103705059_20221124193502.jpg',
-    'https://r1imghtlak.mmtcdn.com/7ecgob5fmt0g93aitug3fut6001l.jpg?&output-quality=75&downsize=583:388&output-format=jpg'
+const Rooms =[
+    {
+        name:'Single',
+        price:100,
+        src:'https://www.hotelmonterey.co.jp/upload_file/monhtyo/stay/sng_600_001.jpg',
+        rating:4.3
+    },{
+        name:'Double',
+        price:200,
+        src:'https://www.hotel7dublin.com/wp-content/uploads/Hotel-7-double-bedroom.jpg',
+        rating:4.5
+    },{
+        name:'Suite',
+        price:400,
+        src:'https://media-cdn.tripadvisor.com/media/photo-s/22/ac/7b/b8/the-amayaa.jpg',
+        rating:4.8
+    }
 ]
 const Home = ()=>{
+    const navigate = useNavigate();
+    const {user, setUser} = useContext(UserContext);
+    useEffect(()=>{
+        console.log(user);
+    },[]);
     return(
-        <div >
-            <section className={css.intro}>
-                <div className={css.introText}>
-                    <h1>Enjoy Your Dream Vacation</h1>
-                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Distinctio officia odio ducimus nobis aspernatur ea fugiat, voluptatum est maxime</p>
+        <>
+            <div className={css.hero}>
+                <section className={css.intro}>
+                    <h1><span className={css.style}>Memorable</span> Hotels for moments <span className={css.style}>Rich</span> in emotions</h1>
+                    <h3>Book now and get the best prices</h3>
+                    <button onClick={()=>navigate('/booking')}>Book Now</button>
+                </section>
+                <img className={css.heroImage} src='https://images.squarespace-cdn.com/content/v1/5cf832a5ea673b0001d5ed1b/1580981955545-P3QMSW3DLF5CQBXOV2EZ/543CF377-6595-4D26-A87B-7AE78EED8ED2.JPG?format=720w' alt=''/>
+                <h1>Here, local talents come together.</h1>
+                <p>We let ourselves be <strong>inspired by the rich history</strong> as well as by contemporary artists of the city. For in the 21st century the city has so much more to offer than just medieval heritage.</p>
+            </div>
+            <div className={css.about}>
+                <img className={css.heroImage} src='https://c.ndtvimg.com/2023-01/8h8sfu_restaurant_625x300_10_January_23.jpg?im=FaceCrop,algorithm=dnn' alt='' />
+                <h2>The best gateway you can dream of. Culture, nature, beaches and gastronomy. Enjoy your vacation with your family or partner in a fishing village with a medieval past.</h2>
+                <button onClick={()=>navigate('/about')}>Know More</button>
+            </div>
+            <div className={css.facility}>
+                <h1>OUR FACILITIES</h1>
+                <div className={css.facilityContainer}>
+                    {facilities.map( facility => (
+                        <Facility key={facility.name} name={facility.name} value={facility.value} color={facility.color}/>
+                    ))}
+                    {facilities.map( facility => (
+                        <Facility key={facility.name} name={facility.name} value={facility.value} color={facility.color}/>
+                    ))}
                 </div>
-            </section>
-            <section className={css.overview}>
-                <section>
-                    <h1>Facilities</h1>
-                    <div className={css.allFacility}>
-                        {facility.map( fac => (
-                            <Facility key={fac.name} name={fac.name} value={fac.value} color={fac.color}/>
-                        ))}
-                    </div>
-                </section>
-                <section>
-                    <h1>Hotels For You</h1>
-                    <p>5 Days 6 Nights</p>
-                    <div className={css.cost}>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#67bef1" style={{width:'2rem', height:'2rem'}}>
-                            <path fillRule="evenodd" d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
-                        </svg>
-                        <p>USD $506.00</p>
-                    </div>
-                </section>
-                <section>
-                    <p>150 results</p>
-                    <div className={css.imageContainer}>
-                        {images.map( (image,index) => (
-                            <img key={index} className={css.preview} src={image} alt=""/>
-                        ))}
-                    </div>
-                </section>
-            </section>
-        </div>
-    )
+            </div>
+            <div className={css.rooms}>
+                <h1>ROOMS</h1>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut corrupti, voluptate libero explicabo officiis laboriosam modi omnis architecto necessitatibus, ea ad reprehenderit illo. Deserunt voluptates dolorem temporibus? Autem, saepe vitae?</p>
+                <div className={css.roomContainer}>
+                    {Rooms.map(room =>(
+                        <Room key={room.name} src={room.src} name={room.name} price={room.price} rating={room.rating}/>
+                    ))}
+                </div>
+            </div>
+            <Footer/>
+        </>
+    );
 }
 
 export default Home;

@@ -1,12 +1,13 @@
 import { useState } from "react";
-import {useNavigate,Link} from 'react-router-dom';
+import {useNavigate, Link, useParams} from 'react-router-dom';
 import axios from 'axios';
 import css from './register.module.css';
 
-const Register = ()=>{
+const Register = ({name='Register', edit})=>{
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const {id} = useParams();
     const navigate = useNavigate();
     const handleSubmit = async (event)=>{
         event.preventDefault();
@@ -14,9 +15,14 @@ const Register = ()=>{
         alert('Registration Complete You can login')
         navigate('/user/login');
     }
+    // useEffect(()=>{
+    //     setUsername();
+    //     setEmail();
+    //     setPassword();
+    // },[]);
     return(
         <div className={css.container}>
-            <h1>Register</h1>
+            <h1>{name}</h1>
             <div>
                 <form onSubmit={handleSubmit}>
                     <div className={css.inputContainer}>

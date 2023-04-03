@@ -76,12 +76,27 @@ router.put('/:id/edit', async (req,res)=>{
 //delete
 router.delete('/:id/delete', async (req,res)=>{
     const {id} = req.params;
-    const checkBooking = await Booking.findById(id);
-    if(checkBooking){
-        const response = await Booking.deleteOne({_id:checkBooking._id});
-        res.json('Booking Deleted');
+    const {token} = req.cookies;
+    const {password} =req.body;
+    if(token){
+        let userData = '';
+        jwt.verify(token, jwtSecret, {}, async(err, user)=>{
+            if(err) throw err;
+            userData = await User.findById(user.id);
+            if(userData){
+                const checkBooking = await Booking.findById(id);
+                if(checkBooking){
+                    const response = await Booking.deleteOne({_id:checkBooking._id});
+                    res.json('Booking Deleted');
+                }else{
+                    res.json('No such booking available');
+                }
+            }else{
+                res.json('No such user');
+            }
+        });
     }else{
-        res.json('No such booking available');
+        res.json('No user available at the moment');
     }
 });
 

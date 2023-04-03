@@ -1,14 +1,16 @@
 .facility{
     display: flex;
     font-size:10px;
-    width:40px;
+    width:250px;
+    height: 250px;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+    border:1px solid black;
+    border-radius:20px;
 }
-.svghan{
-    width: 1.25rem;
-    height: 1.25rem;
+.svgContainer{
+    width: 30%;
+    height: 30%;
     padding: .5rem;
-    border: 1px solid #d4d4d4;
-    border-radius: .5rem;
 }

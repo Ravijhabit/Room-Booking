@@ -1,61 +1,90 @@
-.intro{
-    width:90%;
-    height:70vh;
-    margin:0 auto;
-    padding:40px;
-    background: linear-gradient(90deg, rgba(29,228,159,0.96) 23%, rgba(121,255,231,0.96) 60%, rgba(219, 238, 235, 0) 93%) left/55% no-repeat, url('https://image-tc.galaxy.tf/wijpeg-cuzli1cv6an7uxu01ahtp1ws2/efate-pool-at-warwick-le-lagon-vanuatu.jpg?width=1300') right;
-    border-radius: 20px;
-    z-index:1;
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Roboto:ital@0;1&display=swap');
+:root{
+    font-family: 'Roboto', sans-serif;
 }
-.introText{
-    width:30%;
-    padding-left: 40px;
-    font-size:20px;
+.style{
+    font-family: 'Dancing Script', cursive;
+    color:rgb(49, 104, 49);
+    font-size:80px;
+    /* font-size: 60px; */
 }
-.introText>h1{
-    font-size:50px;
+.hero{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
 }
-.overview{
-    position: relative;
-    top:-100px;
+.intro, .about, .facility,.rooms,footer{
     box-sizing: border-box;
     display: flex;
-    max-width: 1000px;
-    margin:0 auto;
-    justify-content: space-between;
-    border:1px solid black;
-    border-radius:20px;
-    padding:20px 50px;
-    z-index:2;
-    background-color: white;
+    flex-direction: column;
+    align-items:center;
+    justify-content: space-evenly;
+    padding: 20px 80px 40px 80px;
+    background-color: rgb(238, 227, 211);
+    border:1px solid rgb(136, 98, 98);
 }
-.overview>section{
-    flex-grow:0.3;
-    padding:10px;
+.intro>h1{
+    font-size:60px;
+    padding:0 24px; 
+    font-style: italic;
 }
-.cost{
+.intro>h3{
+    padding: 0 0 20px 20px;
+    align-self: flex-start;
+    color:rgb(100, 39, 39);
+}
+.intro>button, .about>button{
+    height:60px;
+    width:150px;
+    border-radius: 40px;
+    outline:none;
+    border:2px solid rgb(43, 68, 38);
+    box-shadow: 4px 4px 20px rgb(41, 88, 49);
+    background-color: rgb(49, 104, 49);
+    cursor:pointer;
+    color:rgb(238, 233, 233);
+    font-weight: bold;
+}
+.heroImage{
+    width:100%;
+    height:100%;
+}
+.hero>h1,.hero>p{
+    margin:0px;
+    border:1px solid rgb(136, 98, 98);
+    background-color: rgb(238, 227, 211);
+    padding:60px 60px;
+    font-weight:400;
+    text-align: center;
+}
+.about>h2{
+    padding:40px 80px;
+    font-size:32px;
+    text-align: center;
+    color:rgb(85, 61, 61);
+}
+.facilityContainer{
+    display: grid;
+    padding:40px 0;
+    gap:16px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 40px;
+    grid-row-gap: 40px;
+}
+.facility>h1,.rooms>h1{
+    font-weight: bold;
+    font-size:40px;
+    color:rgb(85, 61, 61);
+}
+.rooms>p{
+    width:60%;
+    margin-bottom:40px;
+}
+.roomContainer{
+    width: 100%;
     display: flex;
-    width:70%;
-    justify-content: space-around;
-    align-items: center;
-    gap:10px;
-    padding:4px;
-    border:1px solid black;
-    border-radius: 10px;
-}
-.allFacility{
-    width:300px;
-    display: flex;
-    gap:.5rem;
-    justify-content: space-around;
-}
-.imageContainer{
-    display: flex;
-    width: 200px;
-    gap:4px;
-}
-.preview{
-    width:40px;
-    height: 40px;
-    border-radius: 50%;
+    justify-content: space-evenly;
 }

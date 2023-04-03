@@ -1,0 +1,12 @@
+footer{
+    /* background:no-repeat center/100% url('https://maharajafurniture.com/wp-content/uploads/2021/04/3.jpg'); */
+    height:300px;
+    background:rgb(107, 95, 95);
+    color:white;
+}
+.footerSection{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding:20px 0;
+}

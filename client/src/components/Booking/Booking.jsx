@@ -1,16 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {useNavigate, Link, useParams} from 'react-router-dom';
 import axios from 'axios';
 import {format, differenceInCalendarDays} from 'date-fns';
 import css from './booking.module.css';
 import getBookingData from "../hoc/getBookingData";
+import { UserContext } from "../hooks/UserContext";
 const costChart = {
     Single:100,
     Double:150,
     Sweet:250
 };
 const Booking = ()=>{
+    const {user} = useContext(UserContext);
     const {id} = useParams();
+    const [dateToday, setDateToday] = useState('');
     const [checkIn, setCheckIn] = useState('');
     const [checkOut, setCheckOut] = useState('');
     const [price, setPrice] = useState(0);
@@ -23,12 +26,6 @@ const Booking = ()=>{
     }
     const handleSubmit = async(event)=>{
         event.preventDefault();
-        if(differenceDate(checkIn, new Date)<=0){
-            console.log('Please enter real checkIn date');
-        }
-        if(differenceDate(checkOut, checkIn)<=0){
-            console.log('Invalid Date selection');
-        }
         const newCheckIn = format(new Date(checkIn),'yyyy-MM-dd');
         const newCheckOut = format(new Date(checkOut),'yyyy-MM-dd');
         id ? 
@@ -38,11 +35,12 @@ const Booking = ()=>{
         navigate('/');
     }
     useEffect(()=>{
-        const NoOfDays = differenceDate(checkOut,checkIn);
+        const NoOfDays = Math.max(differenceDate(checkOut,checkIn),1);
         setPrice(costChart[roomType] * NoOfDays * numberOfRooms);
     },[checkOut, checkIn, roomType]);
         
     useEffect(()=>{
+        setDateToday(format(new Date(),'yyyy-MM-dd'));
         if(id){
             const coverFunction = async()=>{
                 try{
@@ -59,6 +57,9 @@ const Booking = ()=>{
                 }
             coverFunction();
         }
+        if(!user){
+            navigate('/user/login');
+        }
     },[]);
 
     return(
@@ -70,7 +71,8 @@ const Booking = ()=>{
                     <input
                         type="date" 
                         id="checkin"  
-                        value={checkIn} 
+                        value={checkIn}  
+                        min={dateToday}
                         onChange={(event)=>setCheckIn(event.target.value)}
                     />
                 </div>
@@ -79,7 +81,8 @@ const Booking = ()=>{
                     <input
                         type="date" 
                         id="checkout"  
-                        value={checkOut} 
+                        value={checkOut}
+                        min={checkIn}
                         onChange={(event)=>setCheckOut(event.target.value)}
                     />
                 </div>

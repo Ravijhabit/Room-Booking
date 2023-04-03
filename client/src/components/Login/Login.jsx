@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import {useNavigate,Link} from 'react-router-dom';
 import axios from 'axios';
 import css from './login.module.css';
@@ -7,7 +7,7 @@ import { UserContext } from "../hooks/UserContext";
 const Login = ()=>{
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const {setUser} = useContext(UserContext);
+    const {user,setUser} = useContext(UserContext);
     const navigate = useNavigate();
     const handleSubmit = async (event)=>{
         event.preventDefault();
@@ -22,6 +22,11 @@ const Login = ()=>{
         setUsername('');
         setPassword('');
     }
+    useEffect(()=>{
+        console.log(user);
+        if(user)
+            navigate('/');
+    },[user]);
     return(
         <div className={css.container}>
             <h1>Login</h1>
