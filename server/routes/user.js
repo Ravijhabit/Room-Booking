@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
+const Booking = require('../models/Booking');
 
 const bcryptSalt = bcrypt.genSaltSync(12);
 const jwtSecret = 'sdaflhsdalkjghwoifkasndc';
@@ -50,21 +51,19 @@ router.post('/login', async(req,res)=>{
     }
 });
 
-//update
-//create a middleware which checks if password is correct or not
-// router.put('/:id/edit', async(req,res)=>{
-//     try{
-//         const {username, email, password} = req.body;
-//         const user = await User.create({
-//             username, 
-//             email,
-//             password: bcrypt.hashSync(password, bcryptSalt),
-//         });
-//         res.json(user);
-//     } catch(err){
-//         res.status(422).json(err);
-//     }
-// });
+router.get('/allbooking',async(req,res)=>{
+    const {token} = req.cookies;
+    if(token){
+        jwt.verify(token, jwtSecret, {}, async(err, user)=>{
+            if(err) throw err;
+            const noBooking = await User.findOne({_id:user.id}).populate({path:'bookings'});
+            res.json(noBooking.bookings);    
+        });
+    }else{
+        res.status(401).json('No data available');
+    }
+})
+
 
 //delete
 router.delete('/delete', async(req,res)=>{
@@ -93,6 +92,21 @@ router.delete('/delete', async(req,res)=>{
     }
 });
 
+//update
+//create a middleware which checks if password is correct or not
+// router.put('/:id/edit', async(req,res)=>{
+//     try{
+//         const {username, email, password} = req.body;
+//         const user = await User.create({
+//             username, 
+//             email,
+//             password: bcrypt.hashSync(password, bcryptSalt),
+//         });
+//         res.json(user);
+//     } catch(err){
+//         res.status(422).json(err);
+//     }
+// });
 router.post('/logout',(req,res)=>{
     res.cookie('token','').json(true);
 })

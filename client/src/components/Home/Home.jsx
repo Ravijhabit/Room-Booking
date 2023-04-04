@@ -3,8 +3,6 @@ import css from './home.module.css';
 import Facility from './Facility/Facility';
 import Room from './Facility/Room';
 import Footer from '../Footer/Footer';
-import { useContext, useEffect } from 'react';
-import { UserContext } from '../hooks/UserContext';
 const facilities=[
     {
         name:'Swimming',
@@ -53,10 +51,6 @@ const Rooms =[
 ]
 const Home = ()=>{
     const navigate = useNavigate();
-    const {user, setUser} = useContext(UserContext);
-    useEffect(()=>{
-        console.log(user);
-    },[]);
     return(
         <>
             <div className={css.hero}>

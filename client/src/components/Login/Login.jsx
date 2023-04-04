@@ -7,7 +7,7 @@ import { UserContext } from "../hooks/UserContext";
 const Login = ()=>{
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const {user,setUser} = useContext(UserContext);
+    const { user, setUser, ready } = useContext(UserContext);
     const navigate = useNavigate();
     const handleSubmit = async (event)=>{
         event.preventDefault();
@@ -23,8 +23,7 @@ const Login = ()=>{
         setPassword('');
     }
     useEffect(()=>{
-        console.log(user);
-        if(user)
+        if(user && ready)
             navigate('/');
     },[user]);
     return(

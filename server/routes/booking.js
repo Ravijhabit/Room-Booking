@@ -1,5 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
 
 const User = require('../models/User');
 const Booking = require('../models/Booking');
@@ -23,7 +25,7 @@ router.post('/new', async(req,res)=>{
     try{
         const userData = await getUserDataFromReq(req);
         const {checkIn, checkOut, price, guests, numberOfRooms, roomType} = req.body;
-        const data = await Booking.create({
+        const booked = await Booking.create({
             checkIn,
             checkOut,
             price,
@@ -32,7 +34,10 @@ router.post('/new', async(req,res)=>{
             roomType,
             user:userData.id
         });
-        res.json(data);
+        const user = await User.findById(userData.id);
+        user.bookings.push(booked);
+        user.save();
+        res.json(booked);
     }catch(err){
         res.status(422).json(err);
     }
@@ -62,11 +67,10 @@ router.put('/:id/edit', async (req,res)=>{
                 numberOfRooms,
                 roomType
         } = req.body;
-    
-        const bookingInfo = await Booking.findByIdAndUpdate(
+        const bookingInfo = await Booking.findByIdAndUpdate( id,{
                 checkIn, checkOut, price, guests, numberOfRooms, roomType
-        );
-
+        });
+        
         res.json({bookingInfo});
     }else{
         res.json('No such booking available');
@@ -77,22 +81,29 @@ router.put('/:id/edit', async (req,res)=>{
 router.delete('/:id/delete', async (req,res)=>{
     const {id} = req.params;
     const {token} = req.cookies;
-    const {password} =req.body;
+    const {password} = req.body;
     if(token){
         let userData = '';
         jwt.verify(token, jwtSecret, {}, async(err, user)=>{
             if(err) throw err;
             userData = await User.findById(user.id);
             if(userData){
-                const checkBooking = await Booking.findById(id);
-                if(checkBooking){
-                    const response = await Booking.deleteOne({_id:checkBooking._id});
-                    res.json('Booking Deleted');
+                const passOk = bcrypt.compareSync(password, userData.password);
+                if(passOk){
+                    const checkBooking = await Booking.findById(id);
+                    if(checkBooking){
+                        await Booking.deleteOne({_id:checkBooking._id});
+                        //delete from user
+                        const user = await User.updateOne({_id:checkBooking.user},{$pull:{bookings:checkBooking._id}});
+                        res.json(user);
+                    }else{
+                        res.json('No such booking available');
+                    }
                 }else{
-                    res.json('No such booking available');
+                    res.status(401).json('Unauthorised');
                 }
             }else{
-                res.json('No such user');
+                res.status(404).json('Not Found');
             }
         });
     }else{

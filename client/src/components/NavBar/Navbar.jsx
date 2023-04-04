@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { Link } from "react-router-dom";
 import { UserContext } from "../hooks/UserContext";
 import css from './navbar.module.css';
@@ -10,6 +10,7 @@ const NavBar = ()=>{
         axios.post('/user/logout');
         setUser('');
     }
+    
     return(
         <div className={css.navbar}>
             <img className={css.logo} src='/icon.png' alt=""/>
@@ -19,7 +20,7 @@ const NavBar = ()=>{
                 {   user ? 
                     <>
                         <Link className={`${css.navPills}`} to="/booking">Booking</Link>
-                        <Link className={`${css.navPills}`} to="/user/:id">Profile</Link>
+                        <Link className={`${css.navPills}`} to={`/user/${user._id}`}>Profile</Link>
                         <button className={`${css.navPills} ${css.rounded}`} style={{cursor:'pointer'}} onClick={logoutHandler}>Logout</button>
                     </>
                     :

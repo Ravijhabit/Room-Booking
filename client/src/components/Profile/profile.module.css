@@ -3,14 +3,32 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    /* background:white;
+    color:black;
     background:rgb(36, 35, 35);
-    color:rgba(255, 255, 255, 0.897);
+    color:rgba(255, 255, 255, 0.897); */
+}
+.contain{
+    display: flex;
+    flex-direction: column;
+    width:60%;
+    border:2px solid black;
+    border-radius:10px;
+    padding:20px;
+    /* justify-content: center; */
+    align-items: center;
 }
 .profile{
     box-sizing: border-box;
-    width:40%;
+    width:80%;
     max-width: 500px;
     padding:40px;
+}
+.booking{
+    box-sizing: border-box;
+    width:90%;
+    max-width:800px;
+    text-align: center;
 }
 .card{
     height: 70vh;
@@ -28,7 +46,7 @@
     border-radius: 50%;
 }
 .intro{
-    background-color: rgb(56, 55, 55);
+    /* background-color: rgb(56, 55, 55); */
     padding:30px;
     border-radius:20px;
 }

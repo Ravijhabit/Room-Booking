@@ -26,6 +26,18 @@ app.use(cors({
 }));
 app.use('/user', userRoutes);
 app.use('/booking',bookingRoutes);
+// app.use('/profile',(req,res)=>{
+//     const {token} = req.cookies;
+//     if(token){
+//         jwt.verify(token, jwtSecret, {}, async (err, userData)=>{
+//             if(err) throw err; 
+//             const {name, email,_id} = await User.findById(userData.id);
+//             res.json({name,email,_id});
+//         });
+//     }else{
+//         res.status(200).json(null);
+//     }
+// })
 
 mongoose.connect(process.env.MONGO_URL)
     .then(()=>{
@@ -47,11 +59,15 @@ mongoose.connect(process.env.MONGO_URL)
 app.get('/profile', async (req,res)=>{
     const {token} = await req.cookies;
     if(token){
-        jwt.verify(token, jwtSecret, {}, async(err, userData)=>{
-            if(err) throw err;
-            const {username, email, _id} = await User.findById(userData.id);
-            res.json({username, email,_id});
-        })
+        try{
+            jwt.verify(token, jwtSecret, {}, async(err, userData)=>{
+                if(err) throw err;
+                const {username, email, _id} = await User.findById(userData.id);
+                res.json({username, email,_id});
+            });
+        }catch(err){
+            res.status(301).json(err);
+        }
     }else{
         res.json(null);
     }

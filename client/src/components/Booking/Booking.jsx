@@ -11,7 +11,7 @@ const costChart = {
     Sweet:250
 };
 const Booking = ()=>{
-    const {user} = useContext(UserContext);
+    const { user, ready } = useContext(UserContext);
     const {id} = useParams();
     const [dateToday, setDateToday] = useState('');
     const [checkIn, setCheckIn] = useState('');
@@ -28,16 +28,20 @@ const Booking = ()=>{
         event.preventDefault();
         const newCheckIn = format(new Date(checkIn),'yyyy-MM-dd');
         const newCheckOut = format(new Date(checkOut),'yyyy-MM-dd');
-        id ? 
+        if(id){
             await axios.put(`/booking/${id}/edit`,{checkIn:newCheckIn, checkOut:newCheckOut, price, guests, numberOfRooms, roomType})
-        : await axios.post('/booking/new',{checkIn:newCheckIn, checkOut:newCheckOut, price, guests, numberOfRooms, roomType});
-        alert('Booking Successful')
-        navigate('/');
+            alert('Booking Edited');
+            navigate(`/Booking/${id}`);
+        }else{
+            await axios.post('/booking/new',{checkIn:newCheckIn, checkOut:newCheckOut, price, guests, numberOfRooms, roomType});
+            alert('Booking Successful')
+            navigate('/');
+        } 
     }
     useEffect(()=>{
         const NoOfDays = Math.max(differenceDate(checkOut,checkIn),1);
         setPrice(costChart[roomType] * NoOfDays * numberOfRooms);
-    },[checkOut, checkIn, roomType]);
+    },[checkOut, checkIn, roomType, numberOfRooms]);
         
     useEffect(()=>{
         setDateToday(format(new Date(),'yyyy-MM-dd'));
@@ -57,7 +61,7 @@ const Booking = ()=>{
                 }
             coverFunction();
         }
-        if(!user){
+        if(ready && !user){
             navigate('/user/login');
         }
     },[]);

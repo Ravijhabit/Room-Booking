@@ -50,3 +50,13 @@
 .close>h6, .close>p{
     margin:10px 10px;
 } 
+button{
+    height: 50px;
+    border-radius:10px;
+    outline:none;
+    border:0;
+    margin:5px;
+    background:rgb(173, 160, 247);
+    color:white;
+    cursor: pointer;
+}

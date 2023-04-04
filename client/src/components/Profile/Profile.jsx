@@ -1,14 +1,16 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../hooks/UserContext';
 import axios from 'axios';
 import css from './profile.module.css';
 import DialogBox from '../hoc/Dialogbox';
 import { useNavigate } from 'react-router-dom';
+import SingleBooking from '../Booking/SingleBooking';
 
 const Profile = ()=>{
     const [show, setShow] = useState(false);
-    const {user, setUser} = useContext(UserContext);
+    const {user, setUser, ready} = useContext(UserContext);
     const [password, setPassword] = useState('');
+    const [allBookings, setAllBookings] = useState([]);
     const navigate = useNavigate();
     const deleteHandler = async(event)=>{
         event.preventDefault();
@@ -26,49 +28,67 @@ const Profile = ()=>{
         setUser('');
         navigate('/');
     }
+    useEffect(() => {
+        if(!user && ready){
+            navigate('/user/login');
+        }
+        const fetchAllBookings = async ()=>{
+            const allData = await axios.get('/user/allbooking'); 
+            setAllBookings(allData.data);
+        }
+        fetchAllBookings();
+    },[]);
 
     return(
         <div className={css.container}>
-            <div className={css.profile}>
-                <section>
-                    <h2>My Account</h2>
-                </section>
-                <section className={css.card}>
-                    <section className={css.name}>
-                        <img src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png' alt=''/>
-                        <h2>{user?.username}</h2>
+            <div className={css.contain}>
+                <div className={css.profile}>
+                    <section>
+                        <h2>My Account</h2>
                     </section>
-                    <section className={css.intro}>
-                        <div>
-                            <h3>Display Name</h3>
-                            <div className={css.cell}>
-                                <h5>{user?.username}</h5>
-                                {/* <button onClick={changeHandler}>Edit</button> */}
+                    <section className={css.card}>
+                        <section className={css.name}>
+                            <img src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png' alt=''/>
+                            <h2>{user?.username}</h2>
+                        </section>
+                        <section className={css.intro}>
+                            <div>
+                                <h3>Display Name</h3>
+                                <div className={css.cell}>
+                                    <h5>{user?.username}</h5>
+                                    {/* <button onClick={changeHandler}>Edit</button> */}
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <h3>Email</h3>
-                            <div className={css.cell}>
-                                <h5>{user?.email}</h5>
-                                {/* <button onClick={changeHandler}>Edit</button> */}
+                            <div>
+                                <h3>Email</h3>
+                                <div className={css.cell}>
+                                    <h5>{user?.email}</h5>
+                                    {/* <button onClick={changeHandler}>Edit</button> */}
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <h3>Password</h3> 
-                            <div className={css.cell}>
-                                <h5>********</h5>
-                                {/* <button onClick={changeHandler}>Change</button> */}
+                            <div>
+                                <h3>Password</h3> 
+                                <div className={css.cell}>
+                                    <h5>********</h5>
+                                    {/* <button onClick={changeHandler}>Change</button> */}
+                                </div>
                             </div>
-                        </div>
+                        </section>
                     </section>
-                </section>
-                <section className={css.footer}>
-                    <button className={css.btn} onClick={deleteHandler}>Delete</button>
-                </section>
+                    <section className={css.footer}>
+                        <button className={css.btn} onClick={deleteHandler}>Delete</button>
+                    </section>
+                </div>
+                { show &&
+                    <DialogBox changeShow={setShow} submitHandler={submitHandler} password={password} setPassword={setPassword}/>
+                }
+                <div className={css.booking}>
+                    {allBookings? <h2>Booking Details</h2>:''}
+                    {allBookings?.map((booking,index)=>(
+                        <SingleBooking key={booking._id} passBookingInfo={booking}/>
+                    ))}
+                </div>
             </div>
-            { show &&
-                <DialogBox changeShow={setShow} submitHandler={submitHandler} password={password} setPassword={setPassword}/>
-            }
         </div>
     );
 }

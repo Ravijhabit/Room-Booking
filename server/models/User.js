@@ -15,7 +15,11 @@ const UserSchema = new Schema({
         type:String,
         required:[true,'username cannot be blank'],
         unique:true
-    }
+    },
+    bookings:[{
+        type:Schema.Types.ObjectId,
+        ref:'Booking',
+    }],
 });
 
 module.exports = mongoose.model("User",UserSchema);
