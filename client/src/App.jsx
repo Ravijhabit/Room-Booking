@@ -10,13 +10,14 @@ import Profile from './components/Profile/Profile';
 import Booking from './components/Booking/Booking';
 import PageNotFound from './components/PageNotFound';
 import ScrollToTop from './components/hoc/ScrollToTop';
-import { UserContextProvider } from './components/hooks/UserContext';
+import { UserContext, UserContextProvider } from './components/hooks/UserContext';
 import SingleBooking from './components/Booking/SingleBooking';
+import { useContext } from 'react';
 axios.defaults.baseURL = 'http://127.0.0.1:3000';
 axios.defaults.withCredentials=true;
 
 function App() {
-  
+  const {user, setUser} = useContext(UserContext);
   return (
     <div className="App">
       <UserContextProvider>

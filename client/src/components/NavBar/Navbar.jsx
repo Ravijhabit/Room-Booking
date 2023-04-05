@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../hooks/UserContext";
 import css from './navbar.module.css';
 const NavBar = ()=>{
-    const { user, setUser } = useContext(UserContext);
+    const { user, setUser, setReady } = useContext(UserContext);
     const logoutHandler = (event)=>{
         event.preventDefault();
         axios.post('/user/logout');
         setUser('');
+        setReady(true);
     }
     
     return(

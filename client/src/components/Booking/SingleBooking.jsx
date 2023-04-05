@@ -19,26 +19,30 @@ const SingleBooking = ({passBookingInfo}) =>{
             const getData = async() => {
                 try{    
                     const response = await getBookingData(id);
-                    setBookingInfo(response);
+                    if(response)
+                        setBookingInfo(response);
+                    else{
+                        navigate('/notFound');
+                    }
                 }catch(err){
                     console.log(err);
                 }
             }
             getData();
-            if(ready && !user){
-                navigate('/user/login');
-            }
         }else{
             setBookingInfo(passBookingInfo);
         }
-    },[]);
+        if(ready && !user){
+            navigate('/user/login');
+        }
+    },[user]);
     const updateHandler = (event)=>{
         event.preventDefault();
         if(differenceInCalendarDays(new Date(format(parseISO(bookingInfo.checkIn),'yyyy-MM-dd')),new Date(format(Date.now(), 'yyyy-MM-dd')))>0){
             navigate(`/booking/${id}/edit`);
         }
         else{
-            console.log('Not possible');
+            alert('Not possible because your checkIn date has crossed');
         }
     }
     const deleteHandler = async (event) =>{
@@ -47,7 +51,7 @@ const SingleBooking = ({passBookingInfo}) =>{
             setShow(true);
         }
         else{
-            console.log('Not possible');
+            alert('Not possible because your checkIn date has crossed');
         }
     }
     const submitHandler = async (event) =>{
@@ -108,7 +112,6 @@ const SingleBooking = ({passBookingInfo}) =>{
                     }
                 </div>    
             }
-            
             {/* update */}
             {/* delete */}
             {/* read */}

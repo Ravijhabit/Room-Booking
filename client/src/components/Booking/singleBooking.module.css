@@ -50,7 +50,7 @@
 .close>h6, .close>p{
     margin:10px 10px;
 } 
-button{
+.btnContainer>button{
     height: 50px;
     border-radius:10px;
     outline:none;

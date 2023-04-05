@@ -11,7 +11,7 @@ const DialogBox = ({changeShow, submitHandler, password, setPassword}) =>{
         event.preventDefault();
         changeShow(false);
         setPassword('');
-    }
+    } 
     return(
         <div className={css.holder}>
             <section className={css.header}>

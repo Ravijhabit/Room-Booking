@@ -25,8 +25,13 @@
     z-index:5;
     position: absolute;
     padding:20px 10px;
+    right:31%;
     backface-visibility:hidden;
     align-self: center;
     background:grey;
     border-radius:20px;
 }
+/* .container{ */
+    /* height:100vh; */
+    /* background:rgba(255,255,255,0.2); */
+/* } */

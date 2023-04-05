@@ -14,7 +14,7 @@ function getUserDataFromReq(req){
     return new Promise((resolve, reject)=>{
         jwt.verify(req.cookies.token, jwtSecret, {}, async( err, userData )=>{
             if(err)
-                throw err;
+                reject(err);
             resolve(userData);
         });
     });
@@ -46,11 +46,15 @@ router.post('/new', async(req,res)=>{
 //read
 router.get('/:id', async (req,res)=>{
     const {id} = req.params;
-    const bookingInfo = await Booking.findById(id);
-    if(bookingInfo){
-        res.json(bookingInfo);
-    }else{
-        res.json(null);
+    try{
+        const bookingInfo = await Booking.findById(id);
+        if(bookingInfo){
+            res.json(bookingInfo);
+        }else{
+            res.json(null);
+        }
+    }catch(err){
+        res.status(404).json('Not Found');
     }
 });
 

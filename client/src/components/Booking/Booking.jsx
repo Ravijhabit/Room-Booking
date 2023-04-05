@@ -64,7 +64,8 @@ const Booking = ()=>{
         if(ready && !user){
             navigate('/user/login');
         }
-    },[]);
+    },[user, ready]);
+
 
     return(
         <div className={css.container}>

@@ -4,7 +4,7 @@ const getBookingData = async (id) =>{
         const response = await axios.get(`/booking/${id}`);
         return response.data;
     }catch(err){
-        console.log(err);
+        throw err;
     }
 }
 

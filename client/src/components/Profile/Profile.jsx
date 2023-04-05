@@ -8,7 +8,7 @@ import SingleBooking from '../Booking/SingleBooking';
 
 const Profile = ()=>{
     const [show, setShow] = useState(false);
-    const {user, setUser, ready} = useContext(UserContext);
+    const {user, setUser, ready, setReady} = useContext(UserContext);
     const [password, setPassword] = useState('');
     const [allBookings, setAllBookings] = useState([]);
     const navigate = useNavigate();
@@ -26,6 +26,7 @@ const Profile = ()=>{
             }
           });
         setUser('');
+        setReady(true);
         navigate('/');
     }
     useEffect(() => {
@@ -74,17 +75,17 @@ const Profile = ()=>{
                                 </div>
                             </div>
                         </section>
-                    </section>
-                    <section className={css.footer}>
-                        <button className={css.btn} onClick={deleteHandler}>Delete</button>
+                        <section className={css.footer}>
+                            <button className={css.btn} onClick={deleteHandler}>Delete</button>
+                        </section>
                     </section>
                 </div>
                 { show &&
                     <DialogBox changeShow={setShow} submitHandler={submitHandler} password={password} setPassword={setPassword}/>
                 }
                 <div className={css.booking}>
-                    {allBookings? <h2>Booking Details</h2>:''}
-                    {allBookings?.map((booking,index)=>(
+                    {allBookings.length? <h2>Booking Details</h2>:<></>}
+                    {allBookings?.map((booking)=>(
                         <SingleBooking key={booking._id} passBookingInfo={booking}/>
                     ))}
                 </div>

@@ -12,7 +12,7 @@
     display: flex;
     flex-direction: column;
     width:60%;
-    border:2px solid black;
+    border:2px solid blueviolet;
     border-radius:10px;
     padding:20px;
     /* justify-content: center; */
@@ -34,7 +34,10 @@
     height: 70vh;
     display: flex;
     flex-direction: column;
+    padding:20px 30px;
     justify-content: space-around;
+    border:2px solid blueviolet;
+    border-radius: 10px;
 }
 .name{
     display: flex;
