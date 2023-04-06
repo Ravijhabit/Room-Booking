@@ -34,9 +34,9 @@ const BookingSchema = new Schema({
         required:true,
         min:[0,'Negative room not possible']
     },
-    roomType:{
-        type:String,
-        enum:['Single','Double','Sweet'],
+    room:{
+        type:Schema.Types.ObjectId,
+        ref:'room',
         required:true
     }
 });

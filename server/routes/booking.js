@@ -46,7 +46,9 @@ router.post('/new', async(req,res)=>{
 //read
 router.get('/:id', async (req,res)=>{
     const {id} = req.params;
-    try{
+    let userData='';
+    try{    
+        userData = await getUserDataFromReq(req);
         const bookingInfo = await Booking.findById(id);
         if(bookingInfo){
             res.json(bookingInfo);
@@ -54,7 +56,9 @@ router.get('/:id', async (req,res)=>{
             res.json(null);
         }
     }catch(err){
-        res.status(404).json('Not Found');
+        if(userData)
+            return res.status(404).json(err);
+        res.status(422).json(err);
     }
 });
 

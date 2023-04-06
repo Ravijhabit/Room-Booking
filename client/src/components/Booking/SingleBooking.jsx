@@ -8,10 +8,10 @@ import DialogBox from "../hoc/Dialogbox";
 import { UserContext } from "../hooks/UserContext";
 
 const SingleBooking = ({passBookingInfo}) =>{
+    const {user, ready} = useContext(UserContext);
     const [bookingInfo, setBookingInfo] = useState(null);
     const [password, setPassword] = useState('');
     const [show, setShow] = useState(false);
-    const {user, ready} = useContext(UserContext);
     let {id} = useParams();
     const navigate = useNavigate();
     useEffect(()=>{ 
@@ -19,13 +19,10 @@ const SingleBooking = ({passBookingInfo}) =>{
             const getData = async() => {
                 try{    
                     const response = await getBookingData(id);
-                    if(response)
-                        setBookingInfo(response);
-                    else{
-                        navigate('/notFound');
-                    }
+                    setBookingInfo(response);
                 }catch(err){
-                    console.log(err);
+                    if(err.response.status===404)
+                        navigate('/notFound');
                 }
             }
             getData();
@@ -35,7 +32,7 @@ const SingleBooking = ({passBookingInfo}) =>{
         if(ready && !user){
             navigate('/user/login');
         }
-    },[user]);
+    },[passBookingInfo, id, user, ready]);
     const updateHandler = (event)=>{
         event.preventDefault();
         if(differenceInCalendarDays(new Date(format(parseISO(bookingInfo.checkIn),'yyyy-MM-dd')),new Date(format(Date.now(), 'yyyy-MM-dd')))>0){

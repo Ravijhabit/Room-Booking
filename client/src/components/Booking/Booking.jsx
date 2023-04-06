@@ -64,7 +64,7 @@ const Booking = ()=>{
         if(ready && !user){
             navigate('/user/login');
         }
-    },[user, ready]);
+    },[user, ready, id]);
 
 
     return(
