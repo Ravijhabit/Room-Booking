@@ -33,11 +33,6 @@ const BookingSchema = new Schema({
         type:Number,
         required:true,
         min:[0,'Negative room not possible']
-    },
-    room:{
-        type:Schema.Types.ObjectId,
-        ref:'room',
-        required:true
     }
 });
 

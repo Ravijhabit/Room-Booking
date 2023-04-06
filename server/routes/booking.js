@@ -1,12 +1,13 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+require('dotenv').config();
 
 
 const User = require('../models/User');
 const Booking = require('../models/Booking');
 
-const jwtSecret = 'sdaflhsdalkjghwoifkasndc';
+const jwtSecret = process.env.SECRET;
 
 const router = express.Router();
 

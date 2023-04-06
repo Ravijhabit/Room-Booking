@@ -1,12 +1,12 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
+require('dotenv').config();
 const User = require('../models/User');
 const Booking = require('../models/Booking');
 
 const bcryptSalt = bcrypt.genSaltSync(12);
-const jwtSecret = 'sdaflhsdalkjghwoifkasndc';
+const jwtSecret = process.env.SECRET;
 
 const router = express.Router();
 

@@ -1,12 +1,16 @@
 .aboutBlock{
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
     gap:20px;
-    height:700px;
+    height:500px;
     align-items: center;
     text-align: center;
+    padding: 0 40px;
 }
 .aboutBlock>img{
+    width:600px;
+    aspect-ratio: 3/2;
     border-radius:200px 0 200px 0;
 }
 .aboutBlock h1{

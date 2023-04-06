@@ -15,15 +15,13 @@ const User = require('./models/User.js');
 const Booking = require('./models/Booking.js');
 
 const bcryptSalt = bcrypt.genSaltSync(12);
-const jwtSecret = 'sdaflhsdalkjghwoifkasndc';
+const jwtSecret = process.env.SECRET;
+const port = process.env.PORT || 3500;
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
-app.use(cors({
-    credentials:true,
-    origin:'http://127.0.0.1:5173'
-}));
+app.use(cors());
 app.use('/user', userRoutes);
 app.use('/booking',bookingRoutes);
 // app.use('/profile',(req,res)=>{
@@ -73,6 +71,6 @@ app.get('/profile', async (req,res)=>{
     }
 });
 
-app.listen(3000, function(){
-    console.log('Server listening on 3000');
+app.listen(port, function(){
+    console.log(`Server listening on ${port}`);
 });
