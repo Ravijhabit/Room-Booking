@@ -56,7 +56,14 @@ router.get('/allbooking',async(req,res)=>{
     if(token){
         jwt.verify(token, jwtSecret, {}, async(err, user)=>{
             if(err) throw err;
-            const noBooking = await User.findOne({_id:user.id}).populate({path:'bookings'});
+            const noBooking = await User.findOne({_id:user.id}).
+            populate({
+                path:'bookings',
+                populate:{
+                    path:'room',
+                    select:['roomType', 'roomNo']
+                }
+        })
             res.json(noBooking.bookings);    
         });
     }else{

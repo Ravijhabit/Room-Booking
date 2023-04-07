@@ -69,7 +69,8 @@ const SingleBooking = ({passBookingInfo}) =>{
                 <p>Loading...</p>:
                 <div className={css.container}>
                     <div className={css.first}>
-                        <p>{bookingInfo?.roomType} </p>
+                        <p>{bookingInfo?.room?.roomType.toUpperCase()} </p>
+                        <p>Room No: {bookingInfo?.room?.roomNo} </p>
                     </div>
                     <div className={css.middle}>
                         <div className={css.date}>

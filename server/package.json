@@ -1,4 +1,10 @@
 {
+  "name": "server",
+  "version": "0.0.0",
+  "description": " room-booking MERN project",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
   "dependencies": {
     "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",

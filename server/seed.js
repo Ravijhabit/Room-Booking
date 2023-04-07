@@ -21,8 +21,11 @@ async function createRooms(){
         }else{
             roomType='suite';
         }
-        lastOccupied = new Date();
-        allRooms.push({roomNo, roomType, lastOccupied});
+        // const lastOccupied = {
+        //     checkIn: new Date(),
+        //     checkOut: new Date()
+        // };
+        allRooms.push({roomNo, roomType});
     }
     await Room.insertMany(allRooms)
         .then(res => {

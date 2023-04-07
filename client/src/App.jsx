@@ -14,11 +14,11 @@ import { UserContext, UserContextProvider } from './components/hooks/UserContext
 import SingleBooking from './components/Booking/SingleBooking';
 import { useContext } from 'react';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';
-import * as dotenv from 'dotenv';
-if(process.env.NODE_ENV === 'production') 
-  disableReactDevTools();
-dotenv.config();
-axios.defaults.baseURL = process.env.BACKEND;
+// import { process } from 'dotenv';
+// if(process.env.NODE_ENV === 'production') 
+//   disableReactDevTools();
+// dotenv.config();
+axios.defaults.baseURL = 'http://127.0.0.1:3000';
 axios.defaults.withCredentials=true;
 
 function App() {

@@ -8,7 +8,7 @@ import { UserContext } from "../hooks/UserContext";
 const costChart = {
     Single:100,
     Double:150,
-    Sweet:250
+    Suite:250
 };
 const Booking = ()=>{
     const { user, ready } = useContext(UserContext);
@@ -20,6 +20,7 @@ const Booking = ()=>{
     const [guests, setGuests] = useState(1);
     const [numberOfRooms, setNumberOfRooms] = useState(1);
     const [roomType, setRoomType] = useState('Single');
+    const [oldCheckIn, setOldCheckIn] = useState();
     const navigate = useNavigate();
     const differenceDate = (latter, former) =>{
         return differenceInCalendarDays(new Date(latter), new Date(former));
@@ -29,12 +30,17 @@ const Booking = ()=>{
         const newCheckIn = format(new Date(checkIn),'yyyy-MM-dd');
         const newCheckOut = format(new Date(checkOut),'yyyy-MM-dd');
         if(id){
-            await axios.put(`/booking/${id}/edit`,{checkIn:newCheckIn, checkOut:newCheckOut, price, guests, numberOfRooms, roomType})
+            await axios.put(`/booking/${id}/edit`,{checkIn:newCheckIn, checkOut:newCheckOut, price, guests, numberOfRooms, roomType, oldCheckIn})
             alert('Booking Edited');
             navigate(`/Booking/${id}`);
         }else{
-            await axios.post('/booking/new',{checkIn:newCheckIn, checkOut:newCheckOut, price, guests, numberOfRooms, roomType});
-            alert('Booking Successful')
+            const response = await axios.post('/booking/new',{checkIn:newCheckIn, checkOut:newCheckOut, price, guests, numberOfRooms, roomType});
+            console.log(response);
+            if(response.data){
+                alert('Booking Successful');
+            }else{
+                alert('Booking Unsuccessful');
+            }
             navigate('/');
         } 
     }
@@ -49,12 +55,14 @@ const Booking = ()=>{
             const coverFunction = async()=>{
                 try{
                         const bookedID = await getBookingData(id);
+                        setOldCheckIn(bookedID.checkIn);
+                        // console.log(bookedID);
                         setCheckIn(bookedID.checkIn.slice(0,10));
                         setCheckOut(bookedID.checkOut.slice(0,10));
                         setPrice(bookedID.price);
                         setGuests(bookedID.guests);
                         setNumberOfRooms(bookedID.numberOfRooms);
-                        setRoomType(bookedID.roomType);
+                        setRoomType(bookedID.room.roomType[0].toUpperCase() + bookedID.room.roomType.slice(1));
                     }catch(err){
                         console.log(err);
                     }
@@ -111,10 +119,10 @@ const Booking = ()=>{
                 </div>
                 <div className={css.inputContainer}>
                     <label htmlFor="roomType">RoomType:</label>
-                    <select name="roomType" id="roomType">
+                    <select name="roomType" id="roomType" value={roomType} onChange={(event)=>setRoomType(event.target.value)}>
                         <option value="Single">Single</option>
                         <option value="Double">Double</option>
-                        <option value="Sweet">Sweet</option>
+                        <option value="Suite">Suite</option>
                     </select>
                 </div>
                 <div className={css.inputContainer}>
