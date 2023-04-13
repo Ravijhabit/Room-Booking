@@ -14,13 +14,11 @@ import { UserContext, UserContextProvider } from './components/hooks/UserContext
 import SingleBooking from './components/Booking/SingleBooking';
 import { useContext } from 'react';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';
-// import { process } from 'dotenv';
-// if(process.env.NODE_ENV === 'production') 
-//   disableReactDevTools();
-// dotenv.config();
-axios.defaults.baseURL = 'http://127.0.0.1:3000';
+axios.defaults.baseURL = 'https://room-booking-api.onrender.com';
 axios.defaults.withCredentials=true;
-
+if(import.meta.env.PROD) 
+    disableReactDevTools();
+  
 function App() {
   const {user, setUser} = useContext(UserContext);
   return (

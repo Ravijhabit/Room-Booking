@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import {useNavigate, Link, useParams} from 'react-router-dom';
+import {useNavigate, Link, useParams, useLocation} from 'react-router-dom';
 import axios from 'axios';
 import {format, differenceInCalendarDays} from 'date-fns';
 import css from './booking.module.css';
@@ -12,6 +12,7 @@ const costChart = {
 };
 const Booking = ()=>{
     const { user, ready } = useContext(UserContext);
+    const { room } = useLocation();
     const {id} = useParams();
     const [dateToday, setDateToday] = useState('');
     const [checkIn, setCheckIn] = useState('');
@@ -35,7 +36,6 @@ const Booking = ()=>{
             navigate(`/Booking/${id}`);
         }else{
             const response = await axios.post('/booking/new',{checkIn:newCheckIn, checkOut:newCheckOut, price, guests, numberOfRooms, roomType});
-            console.log(response);
             if(response.data){
                 alert('Booking Successful');
             }else{
@@ -68,6 +68,8 @@ const Booking = ()=>{
                     }
                 }
             coverFunction();
+        }else if(room){
+            setRoomType(room.roomType);
         }
         if(ready && !user){
             navigate('/user/login');
