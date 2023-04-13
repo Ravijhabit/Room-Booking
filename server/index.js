@@ -23,11 +23,11 @@ app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 app.use(cors({
     credentials:true,
-    origin:'http://127.0.0.1:5173'
+    origin:'https://hotel-room-booking.onrender.com'
 }));
 app.get('/',(req,res)=>{
     console.log('Test is working');
-})
+});
 app.use('/user', userRoutes);
 app.use('/booking',bookingRoutes);
 // app.use('/profile',(req,res)=>{
