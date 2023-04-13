@@ -43,7 +43,11 @@ router.post('/login', async(req,res)=>{
                 (err, token) => {
                     if(err)
                         throw err;
-                    res.cookie('token',token).json(user);
+                    const options ={
+                        maxAge : process.env.SESS_LIFETIME,
+                        sameSite:None
+                    }
+                    res.cookie('token',token, options).json(user);
             });
         }else{
             res.status(422).json('pass not ok');
