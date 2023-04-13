@@ -25,7 +25,7 @@ app.use(cors({
     credentials:true,
     origin:'http://127.0.0.1:5173'
 }));
-app.use('/',(req,res)=>{
+app.get('/',(req,res)=>{
     console.log('Test is working');
 })
 app.use('/user', userRoutes);
