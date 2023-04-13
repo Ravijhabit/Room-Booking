@@ -29,7 +29,6 @@ router.post('/register', async(req,res)=>{
 router.post('/login', async(req,res)=>{
     const { username,password } = req.body;
     const user = await User.findOne({username});
-
     if(!user){
         res.status(404).json('not found');
     }else{
@@ -43,11 +42,12 @@ router.post('/login', async(req,res)=>{
                 (err, token) => {
                     if(err)
                         throw err;
-                    const options ={
-                        maxAge : process.env.SESS_LIFETIME,
-                        sameSite:None
+                    res.cookie('token',token, 
+                    {    
+                        sameSite: "none",
+                        secure: true,
                     }
-                    res.cookie('token',token, options).json(user);
+                    ).json(user);
             });
         }else{
             res.status(422).json('pass not ok');
