@@ -14,7 +14,7 @@ import { UserContext, UserContextProvider } from './components/hooks/UserContext
 import SingleBooking from './components/Booking/SingleBooking';
 import { useContext } from 'react';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';
-axios.defaults.baseURL = 'https://room-booking-api.onrender.com';
+axios.defaults.baseURL = 'https://room-booking-api-26dr.onrender.com';
 axios.defaults.withCredentials=true;
 if(import.meta.env.PROD) 
     disableReactDevTools();

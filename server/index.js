@@ -16,7 +16,7 @@ const Booking = require('./models/Booking.js');
 
 const bcryptSalt = bcrypt.genSaltSync(12);
 const jwtSecret = process.env.SECRET;
-const port = process.env.PORT || 3500;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
@@ -25,6 +25,9 @@ app.use(cors({
     credentials:true,
     origin:'http://127.0.0.1:5173'
 }));
+app.use('/',(req,res)=>{
+    console.log('Test is working');
+})
 app.use('/user', userRoutes);
 app.use('/booking',bookingRoutes);
 // app.use('/profile',(req,res)=>{
