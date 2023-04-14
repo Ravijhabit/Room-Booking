@@ -1,5 +1,5 @@
 .modal{
-    width:500px;
+    width:100%;
     height:100px;
     background:grey;
     border-radius:20px;
@@ -10,7 +10,7 @@
 }
 .header{
     display: flex;
-    width:65%;
+    width:70%;
     justify-content: space-between;
     align-items: center;
 }
@@ -25,13 +25,53 @@
     z-index:5;
     position: absolute;
     padding:20px 10px;
-    right:31%;
     backface-visibility:hidden;
     align-self: center;
     background:grey;
     border-radius:20px;
+    display: flex;
+    flex-direction: column;
+    top:50%;
+    left:31%;
+    width:500px;
+}
+.btn{
+    cursor: pointer;
 }
 /* .container{ */
     /* height:100vh; */
     /* background:rgba(255,255,255,0.2); */
 /* } */
+@media(max-width:1200px){
+    .holder{
+        left:26%;
+    }
+}
+@media(max-width:900px){
+    .holder{
+        left:24%;
+        width:400px;
+    }
+}
+@media(max-width:660px){
+    .holder{
+        left:20%;
+        width:350px;
+    }
+}
+@media(max-width:540px){
+    .holder{
+        left:15%;
+        width:300px;
+    }
+}
+@media(max-width:430px){
+    .holder{
+        left:8%;
+    }
+}
+@media(max-width:370px){
+    .holder{
+        width:250px;
+    }
+}

@@ -20,7 +20,7 @@ router.post('/register', async(req,res)=>{
             email,
             password: bcrypt.hashSync(password, bcryptSalt),
         });
-        res.json(user);
+        res.json('ok registered');
     } catch(err){
         res.status(422).json(err);
     }
@@ -48,7 +48,7 @@ router.post('/login', async(req,res)=>{
                         sameSite: "none",
                         secure: true,
                     }
-                    ).json(user);
+                    ).json({email:user.email, username:user.username});
             });
         }else{
             res.status(422).json('pass not ok');
@@ -56,6 +56,7 @@ router.post('/login', async(req,res)=>{
     }
 });
 
+//cannot replace the res.json in allbooking
 router.get('/allbooking',async(req,res)=>{
     const {token} = req.cookies;
     if(token){
@@ -101,7 +102,7 @@ router.delete('/delete', async(req,res)=>{
                         await Room.findOneAndUpdate(checkBooking.room,{$pull:{ lastOccupied:{'checkIn':checkBooking.checkIn}}});
                     }
                     res.cookie('token','');
-                    res.json(userDeleted);
+                    res.json('ok Deleted');
                 }else{
                     res.status(401).json('Username or password incorrect');
                 }

@@ -21,7 +21,7 @@
     flex-direction: column;
     align-items:center;
     justify-content: space-evenly;
-    padding: 20px 80px 40px 80px;
+    padding: 1.25rem 4rem 2.5rem 4rem;
     background-color: rgb(238, 227, 211);
     border:1px solid rgb(136, 98, 98);
 }
@@ -87,4 +87,64 @@
     width: 100%;
     display: flex;
     justify-content: space-evenly;
+}
+
+@media(max-width:1094px){
+    .rooms{
+        padding: 1.25rem 1.5rem 1.25rem 1.5rem;
+    }
+}
+
+@media(max-width:830px){
+    .hero{
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .rooms,.about,.facility{
+        padding: 1.25rem 0.5rem 1.25rem 0.5rem;
+    }
+    .facilityContainer{
+        grid-column-gap:20px;
+        grid-row-gap:20px;
+    }
+}
+@media(max-width:660px){
+    .roomContainer{
+        flex-direction: column;
+        align-items: center;
+    }
+    .hero>h1,.hero>p,.intro{
+        padding:20px 8px;
+    }
+    .hero>img{
+        width:100%;
+    }
+    .about>h2{
+        font-size:20px;
+        padding:10px 4px;
+    }
+    .intro>button, .about>button{
+        width:100px;
+        height:30px;
+        font-size:12px;
+    }
+}
+
+@media(max-width:430px){
+    .facilityContainer{
+        grid-column-gap:15px;
+        grid-row-gap:15px;
+        padding:0 20px;
+    }
+    .hero>h1,.hero>p{
+        font-size:12px;
+    }
+    .style{
+        font-size:2rem;
+    }
+    .intro>h1{
+        font-size:1.25rem;
+    }
+    .intro>h3{
+        font-size:0.75rem;
+    }
 }

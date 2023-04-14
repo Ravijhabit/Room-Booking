@@ -56,7 +56,6 @@ const Booking = ()=>{
                 try{
                         const bookedID = await getBookingData(id);
                         setOldCheckIn(bookedID.checkIn);
-                        // console.log(bookedID);
                         setCheckIn(bookedID.checkIn.slice(0,10));
                         setCheckOut(bookedID.checkOut.slice(0,10));
                         setPrice(bookedID.price);
@@ -64,7 +63,7 @@ const Booking = ()=>{
                         setNumberOfRooms(bookedID.numberOfRooms);
                         setRoomType(bookedID.room.roomType[0].toUpperCase() + bookedID.room.roomType.slice(1));
                     }catch(err){
-                        console.log(err);
+                        alert(err);
                     }
                 }
             coverFunction();

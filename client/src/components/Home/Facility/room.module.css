@@ -27,6 +27,7 @@
     width:100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 .info>h2{
     margin:8px 0 0 0;
@@ -47,4 +48,25 @@
 .star>svg{
     width: 24px;
     height: 24px;
+}
+@media(max-width:1094px){
+    .room{
+        width:240px;
+    }
+}
+@media(max-width:830px){
+    .room{
+        width:200px;
+        height:300px;
+    }
+    .costInfo{
+        font-size:12px;
+    }
+}
+@media(max-width:660px){
+    .room{
+        width:60%;
+        height:33%;
+        margin: 10px  0;
+    }
 }

@@ -55,9 +55,10 @@ const SingleBooking = ({passBookingInfo}) =>{
         event.preventDefault();
         try{
             await axios.delete(`booking/${id}/delete`,{data:{ password}});
+            alert('booking deleted');
             navigate('/');
         }catch(err){
-            console.log(err);
+            alert(err);
         }
     }
     if(passBookingInfo){

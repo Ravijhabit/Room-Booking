@@ -63,7 +63,7 @@ router.post('/new', async(req,res)=>{
         const user = await User.findById(userData.id);
         user.bookings.push(booked);
         user.save();
-        res.json(booked);
+        res.json('ok booked');
     }catch(err){
         res.status(422).json(err);
     }
@@ -103,12 +103,12 @@ router.put('/:id/edit', async (req,res)=>{
                 oldCheckIn
         } = req.body;
         const deleteRoomBooking = await Room.findOneAndUpdate(checkBooking.room, {$pull: { lastOccupied: {'checkIn':oldCheckIn}}});
-        console.log(deleteRoomBooking);
+        // console.log(deleteRoomBooking);
         const roomAvailable = await roomAvailablity({checkIn, checkOut, roomType, userID: checkBooking.user});
         if(!roomAvailable){
             res.status(204).json();
         }
-        console.log(roomAvailable);
+        // console.log(roomAvailable);
         const bookingInfo = await Booking.findByIdAndUpdate( id,{
                 checkIn, checkOut, price, guests, numberOfRooms, room:roomAvailable._id
         });
