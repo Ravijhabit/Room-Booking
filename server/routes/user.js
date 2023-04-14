@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const User = require('../models/User');
 const Booking = require('../models/Booking');
+const Room = require('../models/Room');
 
 const bcryptSalt = bcrypt.genSaltSync(12);
 const jwtSecret = process.env.SECRET;
@@ -89,13 +90,23 @@ router.delete('/delete', async(req,res)=>{
                 const passOk = bcrypt.compareSync(password,userData.password);
                 if(passOk){
                     const userDeleted = await User.deleteOne({email:userData.email});
+                    //delete all booking which are ahead of time
+                    const populatedData = await userData.populate('bookings');
+                    const aheadBookings = populatedData.bookings.filter(booking =>{
+                        return booking.checkIn > Date.now();  
+                    });
+                    for( let booking in aheadBookings){
+                        const checkBooking = aheadBookings[booking];
+                        await Booking.deleteOne({_id:checkBooking._id});
+                        await Room.findOneAndUpdate(checkBooking.room,{$pull:{ lastOccupied:{'checkIn':checkBooking.checkIn}}});
+                    }
                     res.cookie('token','');
                     res.json(userDeleted);
                 }else{
-                    res.json('Username or password incorrect');
+                    res.status(401).json('Username or password incorrect');
                 }
             }else{
-                res.json('No such user');
+                res.status(404).json('User Not Found');
             }
         });
     }else{
