@@ -29,7 +29,7 @@ const Room = ({src, name, price, rating})=>{
                         {rating}
                     </p>
                 </div>
-                <Link to='/booking' room={{roomType:name}}><button>Book now</button></Link>
+                <Link to='/booking' state={{roomType:name}}><button>Book now</button></Link>
             </section>
         </div>
     );

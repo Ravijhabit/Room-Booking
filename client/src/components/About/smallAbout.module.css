@@ -26,6 +26,9 @@
     justify-content: space-evenly;
     height:100%;
 } */
+.loading{
+    background:grey;
+}
 .left{
     flex-direction: row-reverse;
 }

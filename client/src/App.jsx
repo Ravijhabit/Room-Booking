@@ -10,9 +10,8 @@ import Profile from './components/Profile/Profile';
 import Booking from './components/Booking/Booking';
 import PageNotFound from './components/PageNotFound';
 import ScrollToTop from './components/hoc/ScrollToTop';
-import { UserContext, UserContextProvider } from './components/hooks/UserContext';
+import { UserContextProvider } from './components/hooks/UserContext';
 import SingleBooking from './components/Booking/SingleBooking';
-import { useContext } from 'react';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 axios.defaults.baseURL = 'https://room-booking-api-26dr.onrender.com';
 axios.defaults.withCredentials=true;
@@ -20,7 +19,6 @@ if(import.meta.env.PROD)
     disableReactDevTools();
   
 function App() {
-  const {user, setUser} = useContext(UserContext);
   return (
     <div className="App">
       <UserContextProvider>

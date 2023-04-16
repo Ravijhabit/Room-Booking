@@ -23,7 +23,7 @@
 }
 .holder{
     z-index:5;
-    position: absolute;
+    position: fixed;
     padding:20px 10px;
     backface-visibility:hidden;
     align-self: center;

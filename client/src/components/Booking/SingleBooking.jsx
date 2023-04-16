@@ -6,25 +6,31 @@ import css from './singleBooking.module.css';
 import getBookingData from "../hoc/getBookingData";
 import DialogBox from "../hoc/Dialogbox";
 import { UserContext } from "../hooks/UserContext";
+import SpinnerHandler from "../hoc/SpinnerHandler";
 
 const SingleBooking = ({passBookingInfo}) =>{
     const {user, ready} = useContext(UserContext);
     const [bookingInfo, setBookingInfo] = useState(null);
     const [password, setPassword] = useState('');
+    const [spinner, setSpinner] = useState(false);
     const [show, setShow] = useState(false);
     let {id} = useParams();
     const navigate = useNavigate();
     useEffect(()=>{ 
         if(!passBookingInfo){
+            setSpinner(true);
             const getData = async() => {
                 try{    
                     const response = await getBookingData(id);
                     setBookingInfo(response);
                 }catch(err){
-                    if(err.response.status===404)
+                    if(err.response.status===404){  
+                        setSpinner(false);
                         navigate('/notFound');
+                    }
                 }
             }
+            setSpinner(false);
             getData();
         }else{
             setBookingInfo(passBookingInfo);
@@ -53,21 +59,26 @@ const SingleBooking = ({passBookingInfo}) =>{
     }
     const submitHandler = async (event) =>{
         event.preventDefault();
+        setShow(false);
+        setSpinner(true);
         try{
             await axios.delete(`booking/${id}/delete`,{data:{ password}});
             alert('booking deleted');
+            setSpinner(false);
             navigate('/');
         }catch(err){
-            alert(err);
+            alert('Wrong Password');
+            setPassword('');
         }
+        setSpinner(false);
     }
     if(passBookingInfo){
         id=passBookingInfo._id;
     }
     return(
-        <div>
-            {(!bookingInfo && !ready) ? 
-                <p>Loading...</p>:
+        <SpinnerHandler isLoading={spinner}>
+            {/* {(!bookingInfo && !ready) ? 
+                <p>Loading...</p>: */}
                 <div className={css.container}>
                     <div className={css.first}>
                         <p>{bookingInfo?.room?.roomType.toUpperCase()} </p>
@@ -110,11 +121,11 @@ const SingleBooking = ({passBookingInfo}) =>{
                         :''
                     }
                 </div>    
-            }
+            {/* } */}
             {/* update */}
             {/* delete */}
             {/* read */}
-        </div>
+        </SpinnerHandler>
     );
 }
 

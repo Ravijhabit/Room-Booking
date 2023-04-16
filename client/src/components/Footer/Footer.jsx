@@ -3,7 +3,7 @@ const Footer = () =>{
     return(
         <footer>
                 <section className={css.footerSection}>
-                        <h1>Hotel Ravi Ravel</h1>
+                        <h1>Hotel Ravi Ravali</h1>
                         <p>
                             121 Harmu Street<br/>
                             Ranchi, JH-834002<br/>

@@ -5,6 +5,7 @@ import {format, differenceInCalendarDays} from 'date-fns';
 import css from './booking.module.css';
 import getBookingData from "../hoc/getBookingData";
 import { UserContext } from "../hooks/UserContext";
+import SpinnerHandler from "../hoc/SpinnerHandler";
 const costChart = {
     Single:100,
     Double:150,
@@ -12,8 +13,9 @@ const costChart = {
 };
 const Booking = ()=>{
     const { user, ready } = useContext(UserContext);
-    const { room } = useLocation();
+    const room = useLocation().state;
     const {id} = useParams();
+    const [spinner, setSpinner] = useState(false);
     const [dateToday, setDateToday] = useState('');
     const [checkIn, setCheckIn] = useState('');
     const [checkOut, setCheckOut] = useState('');
@@ -28,11 +30,13 @@ const Booking = ()=>{
     }
     const handleSubmit = async(event)=>{
         event.preventDefault();
+        setSpinner(true);
         const newCheckIn = format(new Date(checkIn),'yyyy-MM-dd');
         const newCheckOut = format(new Date(checkOut),'yyyy-MM-dd');
         if(id){
             await axios.put(`/booking/${id}/edit`,{checkIn:newCheckIn, checkOut:newCheckOut, price, guests, numberOfRooms, roomType, oldCheckIn})
             alert('Booking Edited');
+            setSpinner(false);
             navigate(`/Booking/${id}`);
         }else{
             const response = await axios.post('/booking/new',{checkIn:newCheckIn, checkOut:newCheckOut, price, guests, numberOfRooms, roomType});
@@ -41,6 +45,7 @@ const Booking = ()=>{
             }else{
                 alert('Booking Unsuccessful');
             }
+            setSpinner(false);
             navigate('/');
         } 
     }
@@ -77,60 +82,62 @@ const Booking = ()=>{
 
 
     return(
-        <div className={css.container}>
-            <h1>Booking</h1>
-            <form className={css.fill} onSubmit={handleSubmit}>
-                <div className={css.inputContainer}>
-                    <label htmlFor="checkin">CheckIn:</label>
-                    <input
-                        type="date" 
-                        id="checkin"  
-                        value={checkIn}  
-                        min={dateToday}
-                        onChange={(event)=>setCheckIn(event.target.value)}
-                    />
-                </div>
-                <div className={css.inputContainer}>
-                    <label htmlFor="checkout">CheckOut:</label>
-                    <input
-                        type="date" 
-                        id="checkout"  
-                        value={checkOut}
-                        min={checkIn}
-                        onChange={(event)=>setCheckOut(event.target.value)}
-                    />
-                </div>
-                <div className={css.inputContainer}>
-                    <label htmlFor="guests">Guests:</label>
-                    <input
-                        type="number" 
-                        id="guests" 
-                        value={guests}
-                        onChange={(event)=>setGuests(event.target.value)}
-                    />
-                </div>
-                <div className={css.inputContainer}>
-                    <label htmlFor="numberOfRooms">Number of Rooms:</label>
-                    <input
-                        type="number" 
-                        id="numberOfRooms"  
-                        value={numberOfRooms}
-                        onChange={(event)=>setNumberOfRooms(event.target.value)}
-                    />
-                </div>
-                <div className={css.inputContainer}>
-                    <label htmlFor="roomType">RoomType:</label>
-                    <select name="roomType" id="roomType" value={roomType} onChange={(event)=>setRoomType(event.target.value)}>
-                        <option value="Single">Single</option>
-                        <option value="Double">Double</option>
-                        <option value="Suite">Suite</option>
-                    </select>
-                </div>
-                <div className={css.inputContainer}>
-                    <button type="submit">Book {price? `Rs.${price}`:''}</button>
-                </div>
-            </form>
-        </div>
+        <SpinnerHandler isLoading={spinner}>
+            <div className={css.container}>
+                <h1>Booking</h1>
+                <form className={css.fill} onSubmit={handleSubmit}>
+                    <div className={css.inputContainer}>
+                        <label htmlFor="checkin">CheckIn:</label>
+                        <input
+                            type="date" 
+                            id="checkin"  
+                            value={checkIn}  
+                            min={dateToday}
+                            onChange={(event)=>setCheckIn(event.target.value)}
+                        />
+                    </div>
+                    <div className={css.inputContainer}>
+                        <label htmlFor="checkout">CheckOut:</label>
+                        <input
+                            type="date" 
+                            id="checkout"  
+                            value={checkOut}
+                            min={checkIn}
+                            onChange={(event)=>setCheckOut(event.target.value)}
+                        />
+                    </div>
+                    <div className={css.inputContainer}>
+                        <label htmlFor="guests">Guests:</label>
+                        <input
+                            type="number" 
+                            id="guests" 
+                            value={guests}
+                            onChange={(event)=>setGuests(event.target.value)}
+                        />
+                    </div>
+                    <div className={css.inputContainer}>
+                        <label htmlFor="numberOfRooms">Number of Rooms:</label>
+                        <input
+                            type="number" 
+                            id="numberOfRooms"  
+                            value={numberOfRooms}
+                            onChange={(event)=>setNumberOfRooms(event.target.value)}
+                        />
+                    </div>
+                    <div className={css.inputContainer}>
+                        <label htmlFor="roomType">RoomType:</label>
+                        <select name="roomType" id="roomType" value={roomType} onChange={(event)=>setRoomType(event.target.value)}>
+                            <option value="Single">Single</option>
+                            <option value="Double">Double</option>
+                            <option value="Suite">Suite</option>
+                        </select>
+                    </div>
+                    <div className={css.inputContainer}>
+                        <button type="submit">Book {price? `Rs.${price}`:''}</button>
+                    </div>
+                </form>
+            </div>
+        </SpinnerHandler>
     )
 }
 

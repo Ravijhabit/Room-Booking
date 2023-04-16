@@ -1,4 +1,8 @@
 import {useNavigate} from 'react-router-dom';
+import {IoBarbell} from 'react-icons/io5';
+import {MdSpa, MdSportsBar, MdOutlineRestaurantMenu} from 'react-icons/md';
+import {GiCardRandom} from 'react-icons/gi';
+import {TbSwimming, TbWifi, TbAirConditioning} from 'react-icons/tb';
 import css from './home.module.css';
 import Facility from './Facility/Facility';
 import Room from './Facility/Room';
@@ -6,29 +10,36 @@ import Footer from '../Footer/Footer';
 const facilities=[
     {
         name:'Swimming',
-        value:  
-                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />,
-        color:'#67bef1'
+        value:<TbSwimming style={{width:'35%', height:'35%', color:"#2B3EC5"}}/>
     },
     {
         name:'Wi-fi',
-        value:
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8.288 15.038a5.25 5.25 0 017.424 0M5.106 11.856c3.807-3.808 9.98-3.808 13.788 0M1.924 8.674c5.565-5.565 14.587-5.565 20.152 0M12.53 18.22l-.53.53-.53-.53a.75.75 0 011.06 0z" />,
-        color:'#ff4e41fd'    
+        value:<TbWifi style={{width:'35%', height:'35%', color:'#D98B03'}}/>
     },
         
     {
         name:'AC',
-        value:
-                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />,
-        color:'#3fd13f'
+        value:<TbAirConditioning style={{width:'35%', height:'35%', color:'#93BB93'}}/>
     },
     {
-        name:'Dinner',
-        value:
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243l-1.59-1.59" />,
-        color:'#f8d121'
-
+        name:'Restaurant',
+        value:<MdOutlineRestaurantMenu style={{width:'35%', height:'35%', fill:'#b9ae0a'}}/>
+    },
+    {
+        name:'Gym',
+        value:<IoBarbell style={{width:"35%", height:"35%", color:'#e52607'}}/>
+    },
+    {
+        name:'Spa',
+        value:<MdSpa style={{width:"35%", height:"35%", color:'#439545'}}/>
+    },
+    {
+        name:'Bar',
+        value:<MdSportsBar style={{width:"35%", height:"35%", color:"#465a76"}}/>
+    },
+    {
+        name:'Casino',
+        value:<GiCardRandom style={{width:"35%", height:"35%", color:"#a32453"}}/>    
     }
 ];
 const Rooms =[
@@ -74,9 +85,9 @@ const Home = ()=>{
                     {facilities.map( facility => (
                         <Facility key={facility.name} name={facility.name} value={facility.value} color={facility.color}/>
                     ))}
-                    {facilities.map( facility => (
+                    {/* {facilities.map( facility => (
                         <Facility key={facility.name} name={facility.name} value={facility.value} color={facility.color}/>
-                    ))}
+                    ))} */}
                 </div>
             </div>
             <div className={css.rooms}>
