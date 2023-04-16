@@ -80,10 +80,11 @@
         flex-direction: column;
         position:absolute;
         top:100%;
+        left:10%;
         margin: 0 auto;
-        /* left:5%; */
         width:80%;
-        background:rgba(199, 247, 152, 0.5);
+        background:rgba(233, 210, 175, 0.95);
+        padding: 10px 0;
         align-items: center;
     }
     .hamburger{

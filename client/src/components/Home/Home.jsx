@@ -45,17 +45,17 @@ const facilities=[
 const Rooms =[
     {
         name:'Single',
-        price:100,
+        price:1000,
         src:'https://www.hotelmonterey.co.jp/upload_file/monhtyo/stay/sng_600_001.jpg',
         rating:4.3
     },{
         name:'Double',
-        price:200,
+        price:1800,
         src:'https://www.hotel7dublin.com/wp-content/uploads/Hotel-7-double-bedroom.jpg',
         rating:4.5
     },{
         name:'Suite',
-        price:400,
+        price:3000,
         src:'https://media-cdn.tripadvisor.com/media/photo-s/22/ac/7b/b8/the-amayaa.jpg',
         rating:4.8
     }
@@ -92,7 +92,7 @@ const Home = ()=>{
             </div>
             <div className={css.rooms}>
                 <h1>ROOMS</h1>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut corrupti, voluptate libero explicabo officiis laboriosam modi omnis architecto necessitatibus, ea ad reprehenderit illo. Deserunt voluptates dolorem temporibus? Autem, saepe vitae?</p>
+                <p>Our hotel offers an array of modern and stylish rooms that cater to every traveler's needs. From cozy and comfortable standard rooms to luxurious suites with breathtaking views, our accommodations are designed to provide the perfect haven for relaxation and rejuvenation. Each room features elegant decor, plush bedding, and a range of amenities for a comfortable stay, including high-speed Wi-Fi, flat-screen TV, mini fridge, and more. Whether you're here for business or leisure, our well-appointed rooms provide a welcoming retreat for a memorable stay.</p>
                 <div className={css.roomContainer}>
                     {Rooms.map(room =>(
                         <Room key={room.name} src={room.src} name={room.name} price={room.price} rating={room.rating}/>

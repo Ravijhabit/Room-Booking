@@ -7,9 +7,9 @@ import getBookingData from "../hoc/getBookingData";
 import { UserContext } from "../hooks/UserContext";
 import SpinnerHandler from "../hoc/SpinnerHandler";
 const costChart = {
-    Single:100,
-    Double:150,
-    Suite:250
+    Single:1000,
+    Double:1800,
+    Suite:3000
 };
 const Booking = ()=>{
     const { user, ready } = useContext(UserContext);
